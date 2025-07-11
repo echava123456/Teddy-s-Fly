@@ -61,7 +61,7 @@
             <div class="slider-slide">
                 <img src="imagenes/WhatsApp Image 2025-06-10 at 8.11.06 PM.jpeg" alt="Personaliza tu peluche">
                 <div class="slider-caption">
-                    <h2>Pide tu peluche personalizado</h2>
+                    <h2>Pide tu peluche sin preocupaciones</h2>
                     <p>Hazlo único, como tus sentimientos</p>
                 </div>
             </div>
@@ -156,10 +156,70 @@
             <p>Pagina diseñada por Miguel Echavarria -- contacto: miguelechavarria1002@outlook.es</p>
         </div>
     </footer>
-
+    <!-- INICIALIZACIÓN DE FIREBASE (pega aquí tu config, antes de tus scripts JS) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEjldlAXo7-jJqSCHO4SH6mo3w4eoleNA",
+    authDomain: "teddyfly-767e1.firebaseapp.com",
+    projectId: "teddyfly-767e1",
+    storageBucket: "teddyfly-767e1.appspot.com",
+    messagingSenderId: "951813933755",
+    appId: "1:951813933755:web:9948887bd7abea96b0779e",
+    measurementId: "G-2K2ZHVVYMY"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
     <script src="js/main.js"></script>
     <script src="js/slider.js"></script>
     <script src="js/agregar-carrito.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", async function() {
+    // Usa el id correcto según la página
+    const container = document.getElementById("novedades-listado") || document.getElementById("inicio-novedades");
+    if (!container) return;
+    container.innerHTML = "Cargando novedades...";
+
+    try {
+        // Cargar productos una sola vez
+        const productosSnap = await db.collection("productos").get();
+        const productos = {};
+        productosSnap.forEach(doc => productos[doc.id] = doc.data());
+
+        // Cargar novedades
+        const novedadesSnap = await db.collection("novedades").get();
+        if (novedadesSnap.empty) {
+            container.innerHTML = "<p>No hay novedades aún.</p>";
+            return;
+        }
+        let html = "";
+        novedadesSnap.forEach(doc => {
+            const n = doc.data();
+            const prod = productos[n.productId];
+            const prodName = prod ? prod.name : "Producto no encontrado";
+            // Mostramos el botón sólo si existe el producto relacionado
+            const boton = prod
+                ? `<a href="tienda.html?producto=${n.productId}" class="btn-ver-producto" style="display:inline-block;margin-top:6px;padding:5px 14px;background:#4db3ea;color:white;border-radius:6px;text-decoration:none;">Ver producto</a>`
+                : "";
+            html += `
+                <div class="news-card" style="border-bottom:1px solid #eee;padding:8px 0; margin-bottom:10px;">
+                    <img src="${n.image}" alt="${n.title}" style="height:80px;object-fit:cover;border-radius:8px;">
+                    <strong>${n.title}</strong><br>
+                    ${n.description}<br>
+                    <span style="font-size:12px;color:#888;">Relacionado: ${prodName}</span><br>
+                    ${boton}
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    } catch(e) {
+        container.innerHTML = "Error cargando novedades";
+        console.error(e);
+    }
+});
+</script>
     <div class="floating-bubbles">
         <a href="https://wa.me/573332654542" class="bubble bubble-whatsapp" target="_blank" rel="noopener" title="WhatsApp">
             <img src="assets/icons/whatsapp.svg" alt="WhatsApp">

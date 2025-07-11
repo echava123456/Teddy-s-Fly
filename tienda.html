@@ -66,6 +66,23 @@
     <p>&copy; 2025 Teddy's Fly</p>
     <p>Pagina diseñada por Miguel Echavarria -- contacto: miguelechavarria1002@outlook.es</p>
   </footer>
+<!-- Inicialización de Firebase, igual que en index.html -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEjldlAXo7-jJqSCHO4SH6mo3w4eoleNA",
+    authDomain: "teddyfly-767e1.firebaseapp.com",
+    projectId: "teddyfly-767e1",
+    storageBucket: "teddyfly-767e1.appspot.com",
+    messagingSenderId: "951813933755",
+    appId: "1:951813933755:web:9948887bd7abea96b0779e",
+    measurementId: "G-2K2ZHVVYMY"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+  
   <script src="js/main.js"></script>
  
   <script src="js/tienda.js"></script>

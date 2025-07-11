@@ -159,6 +159,67 @@
             .admin-item { flex-direction: column; align-items: flex-start; gap: 0.5em;}
             .admin-item img { width: 50px; height: 50px;}
         }
+        .admin-item {
+    background: var(--color-terciario, #f7f9fa);
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(51,204,255,0.10);
+    padding: 0.7em 1em;
+    margin-bottom: 1.15em;
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+    transition: box-shadow .13s;
+    width: 100%;
+    min-width: 0;
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.admin-item-details {
+    flex: 1 1 0;
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+}
+
+.admin-item-title {
+    font-weight: 700;
+    color: var(--color-primario, #33ccff);
+    font-size: 1.07em;
+    word-break: break-word;
+}
+
+.admin-item-detail {
+    color: #555;
+    font-size: 0.98em;
+    margin-top: 0.4em;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+}
+
+.admin-item button {
+    margin-top: 0.7em;
+    padding: 0.4em 1.2em;
+    font-size: 0.95em;
+    word-break: break-word;
+    white-space: normal;
+    max-width: 100%;
+}
+
+@media (max-width: 700px) {
+    .admin-container {
+        max-width: 99vw;
+        padding: 1em 0.5em 0.7em 0.5em;
+    }
+}
+
+@media (max-width: 500px) {
+    .admin-header { flex-direction: column; gap:0.7em;}
+    .admin-item { flex-direction: column; align-items: flex-start; gap: 0.5em;}
+    .admin-item img { width: 50px; height: 50px;}
+}
     </style>
 </head>
 <body>
@@ -166,7 +227,7 @@
         <div class="admin-header">
             <img src="logo-teddy-fly.png" alt="Logo Teddy's Fly" loading="lazy">
             <span class="admin-header-title">Panel de Administración</span>
-            <button onclick="logout()" class="logout-btn">Cerrar sesión</button>
+            <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
         </div>
         
         <h2 class="admin-form-title">Agregar Producto</h2>
@@ -210,6 +271,22 @@
 </form>
 <div id="newsList"></div>
     </div>
-    <script src="scripts/dashboard.js"></script>
+    <!-- INICIALIZACIÓN DE FIREBASE -->
+<!-- <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEjldlAXo7-jJqSCHO4SH6mo3w4eoleNA",
+    authDomain: "teddyfly-767e1.firebaseapp.com",
+    projectId: "teddyfly-767e1",
+    storageBucket: "teddyfly-767e1.appspot.com",
+    messagingSenderId: "951813933755",
+    appId: "1:951813933755:web:9948887bd7abea96b0779e",
+    measurementId: "G-2K2ZHVVYMY"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script> -->
+    <script src="scripts/dashboard.js" type="module"></script>
 </body>
 </html>
